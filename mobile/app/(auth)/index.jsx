@@ -1,72 +1,34 @@
 import {
   View,
   Text,
+  Image,
   TextInput,
+  Touchable,
   TouchableOpacity,
   ActivityIndicator,
-  Alert,
 } from "react-native";
 import React, { useState } from "react";
-import styles from "../../assets/styles/signup.styles";
-import { Ionicons } from "@expo/vector-icons";
+import styles from "../../assets/styles/login.styles";
 import COLORS from "@/constants/colors";
-import { useRouter } from "expo-router";
-import { useAuthStore } from "@/store/authStore";
+import { Ionicons } from "@expo/vector-icons";
+import { Link } from "expo-router";
 
-const Signup = () => {
-  const [username, setUsername] = useState("");
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
-  const router = useRouter();
-
-  const { user, isLoading, register, token } = useAuthStore();
-
-  const handleSignup = async () => {
-    const result = await register(username, email, password);
-
-    if (!result.success) {
-      Alert.alert("Error", result.error || "An error occurred during signup");
-    } else {
-      setUsername("");
-      setEmail("");
-      setPassword("");
-      router.push("/(auth)");
-    }
-  };
-
+  const [loading, setLoading] = useState(false);
   return (
     <View style={styles.container}>
+      <View style={styles.topIllustration}>
+        <Image
+          source={require("../../assets/images/i.png")}
+          style={styles.illustrationImage}
+          resizeMode="contain"
+        />
+      </View>
       <View style={styles.card}>
-        <View style={styles.header}>
-          <Text style={[styles.title]}>BookWorm 📚</Text>
-          <Text style={styles.subtitle}>Share your favorite reads !</Text>
-        </View>
         <View style={styles.formContainer}>
-          {/* USERNAME */}
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Username</Text>
-            <View style={styles.inputContainer}>
-              <Ionicons
-                name="person-outline"
-                size={20}
-                color={COLORS.primary}
-                style={styles.inputIcon}
-              />
-              <TextInput
-                placeholderTextColor={COLORS.placeholderText}
-                placeholder="Enter your username"
-                autoCapitalize="true"
-                value={username}
-                onChangeText={setUsername}
-                keybroardAppearance="dark"
-                keyboardType="text"
-                style={styles.input}
-              />
-            </View>
-          </View>
-
           {/* EMAIL */}
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Email</Text>
@@ -80,7 +42,7 @@ const Signup = () => {
               <TextInput
                 placeholderTextColor={COLORS.placeholderText}
                 placeholder="Enter your email"
-                autoCapitalize="true"
+                autoCapitalize="none"
                 value={email}
                 onChangeText={setEmail}
                 keybroardAppearance="dark"
@@ -123,25 +85,34 @@ const Signup = () => {
             </View>
           </View>
         </View>
-        <TouchableOpacity style={styles.button} onPress={handleSignup}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            setLoading(true);
+            handleLogin(email, password);
+            setLoading(false);
+          }}
+          disabled={loading}
+        >
           <Text style={styles.buttonText}>
-            {isLoading ? (
+            {loading ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text style={styles.buttonText}>Signup</Text>
+              <Text style={styles.buttonText}>Login</Text>
             )}
           </Text>
         </TouchableOpacity>
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Already have an account?</Text>
-
-          <TouchableOpacity onPress={() => router.back()}>
-            <Text style={styles.link}>Login</Text>
-          </TouchableOpacity>
+          <Text style={styles.footerText}>Don't have an account?</Text>
+          <Link href="/signup" asChild>
+            <TouchableOpacity>
+              <Text style={styles.link}>Sign Up</Text>
+            </TouchableOpacity>
+          </Link>
         </View>
       </View>
     </View>
   );
 };
 
-export default Signup;
+export default Login;

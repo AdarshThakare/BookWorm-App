@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 24,
     shadowColor: COLORS.black,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 4,
@@ -79,9 +79,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 48,
     color: COLORS.textDark,
-  },
-  eyeIcon: {
-    padding: 8,
   },
   button: {
     backgroundColor: COLORS.primary,

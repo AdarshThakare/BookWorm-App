@@ -13,7 +13,7 @@ export const registerUser = async (req, res) => {
     if (!email || !username || !password) {
       return res.status(400).json({ message: "Please fill all fields" });
     }
-    if (password.length < 6) {
+    if (password.length < 3) {
       return res
         .status(400)
         .json({ message: "Password must be at least 6 characters" });
