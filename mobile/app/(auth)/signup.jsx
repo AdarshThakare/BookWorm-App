@@ -21,18 +21,35 @@ const Signup = () => {
 
   const router = useRouter();
 
-  const { user, isLoading, register, token } = useAuthStore();
+  const { isLoading, register } = useAuthStore();
 
   const handleSignup = async () => {
-    const result = await register(username, email, password);
+    const result = await register(email, username, password);
+    console.log(result);
+
+    if (!username || !email || !password) {
+      Alert.alert("Error", "Please fill all fields");
+      return;
+    }
+
+    if (username.length < 3) {
+      Alert.alert("Error", "Username must be at least 3 characters");
+      return;
+    }
+
+    if (password.length < 3) {
+      Alert.alert("Error", "Password must be at least 6 characters");
+      return;
+    }
 
     if (!result.success) {
-      Alert.alert("Error", result.error || "An error occurred during signup");
+      Alert.alert("Error", "Username or email already exists");
     } else {
       setUsername("");
       setEmail("");
       setPassword("");
       router.push("/(auth)");
+      Alert.alert("Success", "Account created successfully");
     }
   };
 
@@ -123,7 +140,13 @@ const Signup = () => {
             </View>
           </View>
         </View>
-        <TouchableOpacity style={styles.button} onPress={handleSignup}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            handleSignup();
+          }}
+          disabled={isLoading}
+        >
           <Text style={styles.buttonText}>
             {isLoading ? (
               <ActivityIndicator color="#fff" />

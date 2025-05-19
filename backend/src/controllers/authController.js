@@ -1,9 +1,10 @@
-import User from "../models/Users.js";
+import User from "../models/User.js";
 import jwt from "jsonwebtoken";
+import "dotenv/config";
 
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "30d",
+const generateToken = (userId) => {
+  return jwt.sign({ userId }, process.env.JWT_SECRET, {
+    expiresIn: "15d",
   });
 };
 
@@ -36,8 +37,7 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ message: "Username already exists" });
     }
 
-    const profileImage =
-      "https://api.dicebear.com/9.x/avataaars/svg?seed=${username}";
+    const profileImage = `https://api.dicebear.com/5.x/initials/svg?seed=${username}`;
 
     const user = new User({
       email,
@@ -91,6 +91,7 @@ export const loginUser = async (req, res) => {
         email: user.email,
         username: user.username,
         profileImage: user.profileImage,
+        createdAt: user.createdAt,
       },
     });
   } catch (err) {

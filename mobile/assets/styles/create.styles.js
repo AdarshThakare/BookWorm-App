@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   title: {
-    fontSize: 24,
+    textAlign: "center",
+    fontSize: 18.5,
     fontWeight: "700",
     color: COLORS.textPrimary,
     marginBottom: 8,
@@ -74,6 +75,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: COLORS.border,
+    textAlignVertical: "top",
     padding: 12,
     height: 100,
     color: COLORS.textDark,

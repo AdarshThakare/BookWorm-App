@@ -3,7 +3,6 @@ import {
   Text,
   Image,
   TextInput,
-  Touchable,
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
@@ -12,12 +11,22 @@ import styles from "../../assets/styles/login.styles";
 import COLORS from "@/constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import { useAuthStore } from "@/store/authStore";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const { isLoading, login } = useAuthStore();
+
+  const handleLogin = async () => {
+    const result = await login(email, password);
+
+    if (!result.success) {
+      Alert.alert("Error", result.error || "An error occurred during login");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topIllustration}>
@@ -88,14 +97,12 @@ const Login = () => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            setLoading(true);
-            handleLogin(email, password);
-            setLoading(false);
+            handleLogin();
           }}
-          disabled={loading}
+          disabled={isLoading}
         >
           <Text style={styles.buttonText}>
-            {loading ? (
+            {isLoading ? (
               <ActivityIndicator color="#fff" />
             ) : (
               <Text style={styles.buttonText}>Login</Text>

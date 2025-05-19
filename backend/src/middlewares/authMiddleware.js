@@ -1,31 +1,42 @@
-import User from "../models/Users.js";
+import User from "../models/User.js";
+import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 export const protectRoute = async (req, res, next) => {
   //get token
   try {
     const token = req.header("Authorization")?.replace("Bearer ", "");
     if (!token) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized bitch! Access D-nied" });
+      return res.status(401).json({ message: "Unauthorized! Access D-nied" });
     }
 
-    //verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.userId).select("-password");
 
-    //find user
-    const user = await User.findById(decoded.userId).select("-password"); //bring everything - passord (we dont need password)
+      if (!user) {
+        return res
+          .status(401)
+          .json({ message: "Unauthorized - User not found" });
+      }
 
-    if (!user) {
-      return res.status(401).json({ msg: "Token invalid" });
+      req.user = user;
+
+      next();
+    } catch (error) {
+      if (error.name === "TokenExpiredError") {
+        return res
+          .status(401)
+          .json({ message: "Unauthorized - Token expired" });
+      }
+      throw error;
     }
-
-    req.user = user;
-    next();
   } catch (err) {
+    console.log("JWT_SECRET:", process.env.JWT_SECRET); // remove in production!
+    console.log("Error in protectRoute middleware", err.message);
     console.error("Authentication error : ", err.message);
-    res.status(401).json({ msg: "Token is invalid" });
   }
+
   //   const token = req.headers.authorization?.split(" ")[1];
   //   if (!token) {
   //     return res.status(401).json({ message: "Unauthorized" });

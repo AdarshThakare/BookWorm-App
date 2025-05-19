@@ -1,41 +1,62 @@
 import cloudinary from "../lib/cloudinary.js";
 import Book from "../models/Book.js";
 
+// export const addBook = async (req, res) => {
+//   try {
+//     const { title, caption, rating, image } = req.body;
+//     if (!title || !caption || !rating || !image) {
+//       return res.status(400).json({ message: "Please fill all fields" });
+//     }
+
+//     //upload image to cloudinary
+//     const uploadResponse = await cloudinary.uploader.upload(image);
+//     const imageUrl = uploadResponse.secure_url;
+
+//     //save to mongoDB
+//     const newbook = new Book({
+//       title,
+//       caption,
+//       image: imageUrl,
+//       rating,
+//       user: req.user._id, //user info in req.user
+//     });
+
+//     await newbook.save();
+
+//     res.status(201).json(newbook);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
+
 export const addBook = async (req, res) => {
   try {
     const { title, caption, rating, image } = req.body;
+
     if (!title || !caption || !rating || !image) {
       return res.status(400).json({ message: "Please fill all fields" });
     }
 
-    //upload image to cloudinary
-    const uploadResponse = await cloudinary.uploader.upload(image);
-    const imageUrl = uploadResponse.secure_url;
+    // Basic validation for image URL
+    if (!image.startsWith("http")) {
+      return res.status(400).json({ message: "Invalid image URL" });
+    }
 
-    //save to mongoDB
-    const newbook = new Book({
+    // Save book with image URL directly
+    const newBook = new Book({
       title,
       caption,
-      image: imageUrl,
+      image, // This is now a Cloudinary URL from frontend
       rating,
-      user: req.user._id, //user info in req.user
+      user: req.user._id,
     });
 
-    await newbook.save();
+    await newBook.save();
 
-    res.status(201).json({
-      message: "Book added successfully",
-      book: {
-        id: newbook._id,
-        title: newbook.title,
-        caption: newbook.caption,
-        image: newbook.image,
-        rating: newbook.rating,
-        user: newbook.user,
-      },
-    });
+    res.status(201).json(newBook);
   } catch (error) {
-    console.error(error);
+    console.error("Error in addBook:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -52,7 +73,8 @@ export const getBooks = async (req, res) => {
       })
       .skip(skip)
       .limit(limit)
-      .populate("user", "username profileImage");
+      .populate("user", "username profileImage")
+      .exec();
 
     const totalBooks = await Book.countDocuments();
 
