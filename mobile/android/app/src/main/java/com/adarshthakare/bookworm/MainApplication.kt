@@ -1,4 +1,4 @@
-package com.adarshthakare.mobile
+package com.adarshthakare.bookworm
 
 import android.app.Application
 import android.content.res.Configuration

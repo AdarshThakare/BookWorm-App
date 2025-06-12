@@ -1,4 +1,4 @@
-package com.adarshthakare.mobile
+package com.adarshthakare.bookworm
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

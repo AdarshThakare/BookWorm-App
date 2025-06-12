@@ -87,9 +87,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.adarshthakare.mobile'
+    namespace 'com.adarshthakare.bookworm'
     defaultConfig {
-        applicationId 'com.adarshthakare.mobile'
+        applicationId 'com.adarshthakare.bookworm'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
