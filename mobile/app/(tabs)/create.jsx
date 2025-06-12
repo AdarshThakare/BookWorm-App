@@ -8,6 +8,7 @@ import {
   Alert,
   Image,
   ActivityIndicator,
+  SafeAreaView,
 } from "react-native";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
@@ -236,89 +237,91 @@ const create = () => {
       contentContainerStyle={styles.container}
       style={styles.scrollViewStyle}
     >
-      <View style={styles.card}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Add Book Recommendations</Text>
-          <Text style={styles.subtitle}>
-            Share your favourite reads with the community!
-          </Text>
-        </View>
-        <View style={styles.form}>
-          <View style={styles.formGroup}>
-            <Text style={styles.label}>Book Title</Text>
-            <View style={styles.inputContainer}>
-              <Ionicons
-                name="book-outline"
-                size={20}
-                color={COLORS.textSecondary}
-                style={styles.inputIcon}
-              />
+      <SafeAreaView>
+        <View style={styles.card}>
+          <View style={styles.header}>
+            <Text style={styles.title}>Add Book Recommendations</Text>
+            <Text style={styles.subtitle}>
+              Share your favourite reads with the community!
+            </Text>
+          </View>
+          <View style={styles.form}>
+            <View style={styles.formGroup}>
+              <Text style={styles.label}>Book Title</Text>
+              <View style={styles.inputContainer}>
+                <Ionicons
+                  name="book-outline"
+                  size={20}
+                  color={COLORS.textSecondary}
+                  style={styles.inputIcon}
+                />
+                <TextInput
+                  placeholder="Enter book title"
+                  placeholderTextColor={COLORS.placeholderText}
+                  value={title}
+                  onChangeText={setTitle}
+                  style={styles.input}
+                />
+              </View>
+            </View>
+            <View style={styles.formGroup}>
+              <Text style={styles.label}>Rating</Text>
+              {renderRatingPicker()}
+            </View>
+            <View style={styles.formGroup}>
+              <Text style={styles.label}>Book Image</Text>
+              <TouchableOpacity style={styles.imagePicker} onPress={pickImage}>
+                {image ? (
+                  <Image source={{ uri: image }} style={styles.previewImage} />
+                ) : (
+                  <View style={styles.placeholderContainer}>
+                    <Ionicons
+                      name="image-outline"
+                      size={50}
+                      color={COLORS.textSecondary}
+                    />
+                    <Text style={styles.placeholderText}>
+                      Tap to select an image
+                    </Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            </View>
+            <View style={styles.formGroup}>
+              <Text style={styles.label}>Caption</Text>
               <TextInput
-                placeholder="Enter book title"
+                placeholder="Write your review or thoughts about this book"
                 placeholderTextColor={COLORS.placeholderText}
-                value={title}
-                onChangeText={setTitle}
-                style={styles.input}
+                value={caption}
+                onChangeText={setCaption}
+                style={styles.textArea}
+                multiline
               />
             </View>
-          </View>
-          <View style={styles.formGroup}>
-            <Text style={styles.label}>Rating</Text>
-            {renderRatingPicker()}
-          </View>
-          <View style={styles.formGroup}>
-            <Text style={styles.label}>Book Image</Text>
-            <TouchableOpacity style={styles.imagePicker} onPress={pickImage}>
-              {image ? (
-                <Image source={{ uri: image }} style={styles.previewImage} />
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                handleSubmit();
+              }}
+              disabled={loading}
+            >
+              {loading ? (
+                <ActivityIndicator color={COLORS.white} />
               ) : (
-                <View style={styles.placeholderContainer}>
+                <>
                   <Ionicons
-                    name="image-outline"
-                    size={50}
-                    color={COLORS.textSecondary}
+                    name="cloud-upload-outline"
+                    size={20}
+                    color={COLORS.white}
+                    style={styles.buttonIcon}
                   />
-                  <Text style={styles.placeholderText}>
-                    Tap to select an image
-                  </Text>
-                </View>
+                  <Text style={styles.buttonText}>Share</Text>
+                </>
               )}
             </TouchableOpacity>
           </View>
-          <View style={styles.formGroup}>
-            <Text style={styles.label}>Caption</Text>
-            <TextInput
-              placeholder="Write your review or thoughts about this book"
-              placeholderTextColor={COLORS.placeholderText}
-              value={caption}
-              onChangeText={setCaption}
-              style={styles.textArea}
-              multiline
-            />
-          </View>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              handleSubmit();
-            }}
-            disabled={loading}
-          >
-            {loading ? (
-              <ActivityIndicator color={COLORS.white} />
-            ) : (
-              <>
-                <Ionicons
-                  name="cloud-upload-outline"
-                  size={20}
-                  color={COLORS.white}
-                  style={styles.buttonIcon}
-                />
-                <Text style={styles.buttonText}>Share</Text>
-              </>
-            )}
-          </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     </ScrollView>
   );
 };

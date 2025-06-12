@@ -62,12 +62,15 @@ const Profile = () => {
   const handleDeleteBook = async (bookId) => {
     try {
       setDeletedBookId(bookId);
-      const response = await fetch(`${API_URL}/books/${bookId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `https://bookworm-backend-jlq2.onrender.com/api/v1/books/${bookId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const data = await response.json();
       if (!response.ok)
         throw new Error(data.message || "Failed to delete book.");

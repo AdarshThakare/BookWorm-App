@@ -1,7 +1,7 @@
 import { Stack, useRouter, useSegments } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import SafeScreen from "../components/SafeScreen";
-import { StatusBar } from "react-native";
+import { SafeAreaView, StatusBar } from "react-native";
 import COLORS from "@/constants/colors";
 import { useAuthStore } from "@/store/authStore";
 import { useEffect } from "react";

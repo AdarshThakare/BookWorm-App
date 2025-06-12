@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.background,
     padding: 16,
+    marginTop: 28,
     paddingBottom: 0,
   },
   loadingContainer: {
@@ -95,6 +96,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: COLORS.cardBackground,
     borderRadius: 12,
+
     padding: 12,
     marginBottom: 12,
     shadowColor: COLORS.black,

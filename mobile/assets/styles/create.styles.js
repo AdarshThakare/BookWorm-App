@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: COLORS.background,
     padding: 16,
+    marginTop: 10,
   },
   scrollViewStyle: {
     flex: 1,

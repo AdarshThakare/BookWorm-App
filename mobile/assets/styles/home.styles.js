@@ -5,6 +5,7 @@ import COLORS from "../../constants/colors";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 6,
     backgroundColor: COLORS.background,
   },
   loadingContainer: {
@@ -24,11 +25,14 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 24,
     fontFamily: "JetBrainsMono-Medium",
-    letterSpacing: 0.5,
+    letterSpacing: 1.2,
+    fontWeight: "bold",
     color: COLORS.primary,
     marginBottom: 8,
   },
   headerSubtitle: {
+    letterSpacing: 1.2,
+
     fontSize: 14,
     color: COLORS.textSecondary,
     textAlign: "center",
@@ -116,6 +120,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   emptySubtext: {
+    letterSpacing: 1.2,
+
     fontSize: 14,
     color: COLORS.textSecondary,
     textAlign: "center",
