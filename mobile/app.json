@@ -1,11 +1,11 @@
 {
   "expo": {
     "name": "BookWorm📚",
-    "slug": "mobile",
+    "slug": "bookworm",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "mobile",
+    "scheme": "bookworm",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -18,7 +18,7 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.adarshthakare.mobile"
+      "package": "com.adarshthakare.bookworm"
     },
     "web": {
       "bundler": "metro",
@@ -39,6 +39,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "56c72bb0-df92-41dd-90e1-2f6ec4c0e774"
+      }
     }
   }
 }
