@@ -43,8 +43,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "56c72bb0-df92-41dd-90e1-2f6ec4c0e774"
+        "projectId": "b49feb43-1289-46b3-978e-71fea9d69673"
       }
-    }
+    },
+    "owner": "adarshthakare"
   }
 }
